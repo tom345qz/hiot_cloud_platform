@@ -71,5 +71,10 @@
     <!--带有@Transactional标记的方法会调用transactionManager组件追加事务控制-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!--重要！将你的SwaggerConfig配置类注入-->
+    <bean class="com.huatec.hiot_cloud.core.config.Swagger2Config"/>
 
+    <!--重要！配置swagger资源不被拦截-->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 </beans>

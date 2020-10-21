@@ -1,19 +1,15 @@
-package com.huatec.hiot_cloud.core.autogenerator.service;
+package com.huatec.hiot_cloud.core.bo;
 
 import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
-import com.baomidou.mybatisplus.service.IService;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * <p>
- * 服务类
- * </p>
+ * 用户认证业务层接口
  *
- * @author code generator
- * @since 2020-10-07
+ * @author WUWENBO
+ * @since 2020/10/21 10:28
  */
-public interface IUsersService extends IService<Users> {
-
+public interface IAuthBO {
     /**
      * 根据用户名密码返回用户对象
      *
