@@ -1,6 +1,6 @@
 package com.huatec.hiot_cloud.core.controller;
 
-import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
+import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 import com.huatec.hiot_cloud.core.bo.IAuthBO;
 import com.huatec.hiot_cloud.core.config.Constant;
 import com.huatec.hiot_cloud.core.config.Result;
@@ -57,7 +57,7 @@ public class AuthController {
         }
 
         // 校验用户名，密码是否正确
-        Users user = authBO.findForLogin(username, password);
+        User user = authBO.findForLogin(username, password);
         if (user == null) {
             return Result.error(ResultStatus.LOGIN_ERROR);
         }

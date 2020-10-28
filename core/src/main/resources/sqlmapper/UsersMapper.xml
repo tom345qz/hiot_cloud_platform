@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huatec.hiot_cloud.core.autogenerator.mapper.UsersMapper">
+<mapper namespace="com.huatec.hiot_cloud.core.autogenerator.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
+    <resultMap id="BaseResultMap" type="com.huatec.hiot_cloud.core.autogenerator.entity.User">
         <id column="id" property="id"/>
         <result column="password" property="password"/>
         <result column="lastlogin" property="lastlogin"/>
@@ -19,15 +19,15 @@
     </resultMap>
 
     <!--查询所有用户 -->
-    <select id="findAll" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
+    <select id="findAll" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.User">
         select id, password, lastlogin, username, email, is_active as isActive, date_joined as dateJoined,
           is_superuser as isSuperuser,
-          is_staff as isStaff, is_developer as isDeveloper, img, phone from users
+          is_staff as isStaff, is_developer as isDeveloper, img, phone from user
     </select>
 
     <!--注册用户信息保存-->
-    <insert id="saveForRegister" parameterType="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
-        insert into users (id, password, lastlogin, username, email, is_active, date_joined, is_superuser,
+    <insert id="saveForRegister" parameterType="com.huatec.hiot_cloud.core.autogenerator.entity.User">
+        insert into user (id, password, lastlogin, username, email, is_active, date_joined, is_superuser,
           is_staff, is_developer, img, phone)
         values (#{id}, #{password}, #{lastlogin}, #{username}, #{email}, #{isActive}, #{dateJoined}, #{isSuperuser},
           #{isStaff}, #{isDeveloper}, #{img}, #{phone})
@@ -35,64 +35,64 @@
 
     <!--修改密码-->
     <update id="updatePassword" parameterType="String">
-        update users set password = #{password} where id = #{id}
+        update user set password = #{password} where id = #{id}
     </update>
 
     <!--根据用户id删除用户信息-->
     <delete id="deleteById" parameterType="String">
-        delete from users where id = #{id}
+        delete from user where id = #{id}
     </delete>
 
     <!--修改邮箱地址-->
     <update id="updateEmail" parameterType="String">
-        update users set email = #{email} where id = #{id}
+        update user set email = #{email} where id = #{id}
     </update>
 
     <!--修改邮箱地址-->
-    <update id="updateEmail2" parameterType="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
-        update users set email = #{email} where id = #{id}
+    <update id="updateEmail2" parameterType="com.huatec.hiot_cloud.core.autogenerator.entity.User">
+        update user set email = #{email} where id = #{id}
     </update>
 
     <!--修改邮箱地址-->
     <update id="updateEmail3" parameterType="Map">
-        update users set email = #{email} where id = #{id}
+        update user set email = #{email} where id = #{id}
     </update>
 
     <!--修改头像-->
-    <update id="updateImg" parameterType="Users">
-        update users set img = #{img} where id = #{id}
+    <update id="updateImg" parameterType="user">
+        update user set img = #{img} where id = #{id}
     </update>
 
     <!--登录用户更新lastlogin时间-->
-    <update id="updateLastlogin" parameterType="Users">
-        update users set lastlogin = #{lastlogin} where id =#{id}
+    <update id="updateLastlogin" parameterType="user">
+        update user set lastlogin = #{lastlogin} where id =#{id}
     </update>
 
     <!--登录用户信息查询-->
-    <select id="findForLogin" parameterType="String" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
+    <select id="findForLogin" parameterType="String" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.User">
         select id, password, lastlogin, username, email, is_active as isActive, date_joined as dateJoined,
           is_superuser as isSuperuser,
-          is_staff as isStaff, is_developer as isDeveloper, img, phone from users
+          is_staff as isStaff, is_developer as isDeveloper, img, phone from user
           where username = #{username} and password = #{password}
     </select>
 
     <!--根据用户ID查询用户信息-->
-    <select id="findById" parameterType="String" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.Users">
+    <select id="findById" parameterType="String" resultType="com.huatec.hiot_cloud.core.autogenerator.entity.User">
         select id, password, lastlogin, username, email, is_active as isActive, date_joined as dateJoined,
           is_superuser as isSuperuser,
-          is_staff as isStaff, is_developer as isDeveloper, img, phone from users
+          is_staff as isStaff, is_developer as isDeveloper, img, phone from user
         where id = #{id}
     </select>
 
 
     <!--登录验证，查询用户名是否存在-->
     <select id="findUsername" parameterType="String" resultType="String">
-        select id from users where username = #{username}
+        select id from user where username = #{username}
     </select>
 
     <!--登录验证，查询邮箱是否存在-->
     <select id="findEmail" parameterType="String" resultType="String">
-        select id from users where email = #{email}
+        select id from user where email = #{email}
     </select>
 
 </mapper>

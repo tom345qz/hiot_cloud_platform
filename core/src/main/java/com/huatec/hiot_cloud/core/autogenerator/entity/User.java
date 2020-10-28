@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author code generator
  * @since 2020-10-07
  */
-public class Users extends Model<Users> {
+public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
 
@@ -177,7 +177,7 @@ public class Users extends Model<Users> {
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "User{" +
                 "id=" + id +
                 ", password=" + password +
                 ", lastlogin=" + lastlogin +

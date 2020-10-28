@@ -1,6 +1,6 @@
 package com.huatec.hiot_cloud.core.autogenerator.mapper;
 
-import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
+import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,20 +15,20 @@ import java.util.Map;
  * @author code generator
  * @since 2020-10-07
  */
-public interface UsersMapper extends BaseMapper<Users> {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * 返回所有用户
      *
      * @return
      */
-    List<Users> findAll();
+    List<User> findAll();
 
     /**
      * 保存一个新用户
      *
      * @param user 用户对象
      */
-    void saveForRegister(Users user);
+    void saveForRegister(User user);
 
     /**
      * 修改用户密码
@@ -58,7 +58,7 @@ public interface UsersMapper extends BaseMapper<Users> {
      *
      * @param user 用户对象
      */
-    void updateEmail2(Users user);
+    void updateEmail2(User user);
 
     /**
      * 修改用户邮箱地址
@@ -72,14 +72,14 @@ public interface UsersMapper extends BaseMapper<Users> {
      *
      * @param user 用户对象
      */
-    void updateImg(Users user);
+    void updateImg(User user);
 
     /**
      * 修改用户最近登陆时间
      *
      * @param user 用户对象
      */
-    void updateLastlogin(Users user);
+    void updateLastlogin(User user);
 
     /**
      * 根据用户名密码返回用户对象
@@ -88,7 +88,7 @@ public interface UsersMapper extends BaseMapper<Users> {
      * @param password 密码
      * @return 用户对象
      */
-    Users findForLogin(@Param("username") String username, @Param("password") String password);
+    User findForLogin(@Param("username") String username, @Param("password") String password);
 
     /**
      * 根据用户id查询用户对象
@@ -96,7 +96,7 @@ public interface UsersMapper extends BaseMapper<Users> {
      * @param id 用户id
      * @return 用户对象
      */
-    Users findById(String id);
+    User findById(String id);
 
     /**
      * 校验用户名是否已存在

@@ -1,7 +1,7 @@
 package com.huatec.hiot_cloud.core.test;
 
-import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
-import com.huatec.hiot_cloud.core.autogenerator.mapper.UsersMapper;
+import com.huatec.hiot_cloud.core.autogenerator.entity.User;
+import com.huatec.hiot_cloud.core.autogenerator.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class UserDaoTest {
      * 自动装载
      */
     @Autowired
-    private UsersMapper userDao;
+    private UserMapper userDao;
 
     /**
      * 测试查找所有用户
@@ -42,7 +42,7 @@ public class UserDaoTest {
 
     @Test
     public void testSaveForRegister() {
-        Users user = new Users();
+        User user = new User();
         user.setId("abc12345");
         user.setPassword("12345");
         user.setUsername("test12345");
@@ -67,7 +67,7 @@ public class UserDaoTest {
 
     @Test
     public void testUpdateEmail2() {
-        Users user = new Users();
+        User user = new User();
         user.setId("abc12345");
         user.setEmail("123@qq.com");
         userDao.updateEmail2(user);
@@ -83,7 +83,7 @@ public class UserDaoTest {
 
     @Test
     public void testUpdateImg() {
-        Users user = new Users();
+        User user = new User();
         user.setId("abc12345");
         user.setImg("/test/test.jpg");
         userDao.updateImg(user);
@@ -91,7 +91,7 @@ public class UserDaoTest {
 
     @Test
     public void testUpdateLastlogin() {
-        Users user = new Users();
+        User user = new User();
         user.setId("abc12345");
         user.setLastlogin(new Date());
         userDao.updateImg(user);

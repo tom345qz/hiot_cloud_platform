@@ -1,7 +1,6 @@
 package com.huatec.hiot_cloud.core.bo;
 
-import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
-import org.apache.ibatis.annotations.Param;
+import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 
 /**
  * 用户认证业务层接口
@@ -17,7 +16,7 @@ public interface IAuthBO {
      * @param password 密码
      * @return 用户对象
      */
-    Users findForLogin(String username, String password);
+    User findForLogin(String username, String password);
 
     /**
      * 修改用户最近登陆时间

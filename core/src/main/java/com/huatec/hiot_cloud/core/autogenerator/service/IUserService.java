@@ -1,8 +1,7 @@
 package com.huatec.hiot_cloud.core.autogenerator.service;
 
-import com.huatec.hiot_cloud.core.autogenerator.entity.Users;
+import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 import com.baomidou.mybatisplus.service.IService;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -12,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
  * @author code generator
  * @since 2020-10-07
  */
-public interface IUsersService extends IService<Users> {
+public interface IUserService extends IService<User> {
 
     /**
      * 根据用户名密码返回用户对象
@@ -21,7 +20,7 @@ public interface IUsersService extends IService<Users> {
      * @param password 密码
      * @return 用户对象
      */
-    Users findForLogin(String username, String password);
+    User findForLogin(String username, String password);
 
     /**
      * 修改用户最近登陆时间
