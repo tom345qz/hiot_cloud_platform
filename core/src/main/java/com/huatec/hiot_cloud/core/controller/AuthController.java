@@ -1,13 +1,15 @@
 package com.huatec.hiot_cloud.core.controller;
 
+import com.huatec.hiot_cloud.core.authorization.annotation.Authorization;
+import com.huatec.hiot_cloud.core.authorization.annotation.CurrentUser;
+import com.huatec.hiot_cloud.core.authorization.manager.TokenManager;
+import com.huatec.hiot_cloud.core.authorization.model.TokenModel;
 import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 import com.huatec.hiot_cloud.core.bo.IAuthBO;
-import com.huatec.hiot_cloud.core.config.Constant;
+import com.huatec.hiot_cloud.core.config.Constants;
 import com.huatec.hiot_cloud.core.config.Result;
 import com.huatec.hiot_cloud.core.config.ResultStatus;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 身份验证模块控制器层
@@ -29,6 +32,9 @@ public class AuthController {
 
     @Autowired
     private IAuthBO authBO;
+
+    @Autowired
+    private TokenManager tokenManager;
 
     /**
      * 登录
@@ -52,7 +58,7 @@ public class AuthController {
         }
 
         // 校验loginCode正确性
-        if (!Constant.LOGIN_CODE_APP.equals(loginCode) && (!Constant.LOGIN_CODE_WEB.equals(loginCode))) {
+        if (!Constants.LOGIN_CODE_APP.equals(loginCode) && (!Constants.LOGIN_CODE_WEB.equals(loginCode))) {
             return Result.error(ResultStatus.INPUT_PARAM_ERROR, "登录代码有误");
         }
 
@@ -63,17 +69,17 @@ public class AuthController {
         }
 
         // 校验如果是普通用户，不允许用web登录
-        if (user.getIsStaff() == Constant.STATUS_TRUE && Constant.LOGIN_CODE_WEB.equals(loginCode)) {
+        if (user.getIsStaff() == Constants.STATUS_TRUE && Constants.LOGIN_CODE_WEB.equals(loginCode)) {
             return Result.error(ResultStatus.LOGIN_CODE_APP_ERROR);
         }
 
         // 校验如果是开发人员，不允许用app登录
-        if (user.getIsDeveloper() == Constant.STATUS_TRUE && Constant.LOGIN_CODE_APP.equals(loginCode)) {
+        if (user.getIsDeveloper() == Constants.STATUS_TRUE && Constants.LOGIN_CODE_APP.equals(loginCode)) {
             return Result.error(ResultStatus.LOGIN_CODE_WEB_ERROR);
         }
 
         // 生成token，更新登录时间
-        String token = createToken();
+        TokenModel token = tokenManager.createToken(Constants.AUTHORIZATION_USER, user.getId());
         authBO.updateLastlogin(user.getId());
 
         // 返回token
@@ -81,18 +87,27 @@ public class AuthController {
     }
 
     @ApiOperation(value = "注销", notes = "用户注销")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "token令牌", required = true, dataType = "string", paramType = "header"),
+    })
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
-    public Result logout() {
+    @Authorization
+    public Result logout(@CurrentUser @ApiIgnore User user) {
+        tokenManager.deleteToken(user.getId());
         return Result.ok(ResultStatus.SUCCESS);
     }
 
-    /**
-     * 创建token
-     *
-     * @return
-     */
-    private String createToken() {
-        return "token test";
+    @ApiOperation(value = "测试", notes = "测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "token令牌", required = true, dataType = "string", paramType = "header"),
+    })
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @ResponseBody
+    @Authorization
+    public Result test() {
+
+        return Result.ok(ResultStatus.SUCCESS);
     }
+
 }

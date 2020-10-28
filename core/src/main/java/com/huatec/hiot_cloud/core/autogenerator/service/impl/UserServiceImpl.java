@@ -36,4 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setLastlogin(new Date());
         userMapper.updateLastlogin(user);
     }
+
+    @Override
+    public User findById(String id) {
+        return userMapper.findById(id);
+    }
 }

@@ -28,4 +28,12 @@ public interface IUserService extends IService<User> {
      * @param id 用户id
      */
     void updateLastlogin(String id);
+
+    /**
+     * 根据用户id查询用户对象
+     *
+     * @param id 用户id
+     * @return 用户对象
+     */
+    User findById(String id);
 }

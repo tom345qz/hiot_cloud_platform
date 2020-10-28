@@ -19,6 +19,24 @@
     <!--Use-dafault-filters=”false”的情况下：<context:exclude-filter>指定的不扫描，<context:include-filter>指定的扫描-->
     <context:component-scan base-package="com.huatec.hiot_cloud.core"/>
 
+    <!--拦截器生效-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <bean class="com.huatec.hiot_cloud.core.authorization.interceptor.AuthorizationInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- SpringMVC注解支持 -->
+    <mvc:annotation-driven>
+        <!--自定义注解驱动注册-->
+        <mvc:argument-resolvers>
+            <bean class="com.huatec.hiot_cloud.core.authorization.resolvers.CurrentUserMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
     <!-- 配置数据库连接信息 -->
     <util:properties id="jdbc" location="classpath:jdbc.properties"/>
     <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
@@ -77,4 +95,48 @@
     <!--重要！配置swagger资源不被拦截-->
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+    <!--配置redis，缓存token-->
+    <bean id="propertyConfigurerRedis" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:redis-config.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- jedis pool配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="minIdle" value="${redis.minIdle}"/>
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>
+        <property name="evictionPolicyClassName" value="${redis.evictionPolicyClassName}"/>
+        <property name="jmxEnabled" value="${redis.jmxEnabled}"/>
+        <property name="lifo" value="${redis.lifo}"/>
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+        <property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}"/>
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"/>
+    </bean>
+
+    <!-- spring data redis -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" value="${redis.pass}"/>
+        <property name="timeout" value="${redis.timeout}"/>
+        <property name="database" value="${redis.default.db}"></property>
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+    </bean>
+
+    <!--redisTemplate注入-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    </bean>
 </beans>
