@@ -39,7 +39,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @ApiOperation(value = "登录", notes = "登录")
+    @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "token令牌", required = true, dataType = "string", paramType = "header"),
     })
