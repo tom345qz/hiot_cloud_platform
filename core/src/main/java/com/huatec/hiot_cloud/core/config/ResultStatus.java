@@ -35,6 +35,7 @@ public enum ResultStatus {
     USER_EXIST(0, "用户名已存在"),
     EMAIL_EXIST(0, "邮箱已被注册"),
     EMAIL_FORMAT_ERROR(0, "邮箱格式错误"),
+    USER_NAME_FORMAT_ERROR(0, "用户名格式错误"),
     DATA_NOT_FOUND(0, "数据不能为空"),
     USER_NOT_FOUND(0, "用户不存在"),
     USER_PASSWORD_ERROR(0, "密码错误"),

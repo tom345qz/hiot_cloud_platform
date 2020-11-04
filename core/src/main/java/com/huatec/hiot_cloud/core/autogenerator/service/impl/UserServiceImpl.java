@@ -41,4 +41,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User findById(String id) {
         return userMapper.findById(id);
     }
+
+    @Override
+    public String findUsername(String username) {
+        return userMapper.findUsername(username);
+    }
+
+    @Override
+    public String findEmail(String email) {
+        return userMapper.findEmail(email);
+    }
+
+    @Override
+    public void saveForRegister(User user) {
+        userMapper.saveForRegister(user);
+    }
+
+    @Override
+    public void updatePassword(String id, String password) {
+        userMapper.updatePassword(id, password);
+    }
+
+    @Override
+    public void updateEmail(String id, String email) {
+        userMapper.updateEmail(id, email);
+    }
 }

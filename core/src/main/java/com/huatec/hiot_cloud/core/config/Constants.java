@@ -60,4 +60,14 @@ public class Constants {
      * 设备token有效期（天）
      */
     public static final int TOKEN_EXPIRES_DAY = 180; //180天
+
+    /**
+     * 用户类型开发人员
+     */
+    public static final int USER_TYPE_DEVELOPER = 0;
+
+    /**
+     * 用户类型普通用户
+     */
+    public static final int USER_TYPE_STAFF = 0;
 }

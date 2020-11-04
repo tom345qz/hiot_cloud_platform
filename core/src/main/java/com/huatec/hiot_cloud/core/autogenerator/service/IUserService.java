@@ -2,6 +2,7 @@ package com.huatec.hiot_cloud.core.autogenerator.service;
 
 import com.huatec.hiot_cloud.core.autogenerator.entity.User;
 import com.baomidou.mybatisplus.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -36,4 +37,43 @@ public interface IUserService extends IService<User> {
      * @return 用户对象
      */
     User findById(String id);
+
+    /**
+     * 校验用户名是否已存在
+     *
+     * @param username
+     * @return
+     */
+    String findUsername(String username);
+
+    /**
+     * 校验邮箱是否已存在
+     *
+     * @param email
+     * @return
+     */
+    String findEmail(String email);
+
+    /**
+     * 保存一个新用户
+     *
+     * @param user 用户对象
+     */
+    void saveForRegister(User user);
+
+    /**
+     * 修改用户密码
+     *
+     * @param id       用户id
+     * @param password 用户密码
+     */
+    void updatePassword(String id, String password);
+
+    /**
+     * 修改用户邮箱地址
+     *
+     * @param id    用户id
+     * @param email 邮箱地址
+     */
+    void updateEmail(String id, String email);
 }
