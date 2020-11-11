@@ -64,6 +64,7 @@ public enum ResultStatus {
     DEVICE_UNBONDED_DENY(0, "不能解绑此设备"),
     DATATYPE_ERROR(0, "通道数据类型有误"),
     OPERATION_ERROR(0, "操作失败"),
+    RESET_PASSWORD_ERROR(0, "重置密码失败"),
 
     /**
      * 验证失败，重新登录信息

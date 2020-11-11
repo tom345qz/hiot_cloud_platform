@@ -76,4 +76,11 @@ public interface IUserService extends IService<User> {
      * @param email 邮箱地址
      */
     void updateEmail(String id, String email);
+
+    /**
+     * 修改用户头像
+     *
+     * @param user 用户对象
+     */
+    void updateImg(User user);
 }

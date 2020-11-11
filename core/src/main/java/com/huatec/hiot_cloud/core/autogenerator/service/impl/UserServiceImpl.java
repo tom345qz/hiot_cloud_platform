@@ -66,4 +66,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void updateEmail(String id, String email) {
         userMapper.updateEmail(id, email);
     }
+
+    @Override
+    public void updateImg(User user) {
+        userMapper.updateImg(user);
+    }
 }

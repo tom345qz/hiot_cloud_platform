@@ -19,8 +19,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -194,5 +196,74 @@ public class UserController {
             return Result.error(ResultStatus.UPDATE_ERROR);
         }
 
+    }
+
+    /**
+     * 重置用户密码
+     *
+     * @param username 用户名
+     * @param email    邮箱
+     * @return
+     */
+    @ApiOperation(value = "重置密码", notes = "重置密码")
+    @RequestMapping(value = "reset-password/{email}/{username}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result resetPassword(@PathVariable String username,
+                                @PathVariable String email) {
+        try {
+            // 校验参数非空
+            if (StringUtils.isEmpty(username)
+                    || StringUtils.isEmpty(email)) {
+                return Result.ok(ResultStatus.INPUT_PARAM_ERROR);
+            }
+
+            // 调用BO层方法做重置密码
+            userBO.resetPassword(username, email);
+
+            // 返回
+            return Result.ok(ResultStatus.UPDATE_SUCCESS);
+        } catch (CustomException ce) {
+            logger.error("重置密码错误：" + ce.getMsg());
+            return Result.error(ResultStatus.RESET_PASSWORD_ERROR, ce.getMsg());
+        } catch (Exception e) {
+            logger.error("重置密码失败：", e);
+            return Result.error(ResultStatus.RESET_PASSWORD_ERROR);
+        }
+    }
+
+    /**
+     * 修改用户头像
+     *
+     * @param user 用户信息
+     * @param file 头像文件
+     * @return
+     */
+    @ApiOperation(value = "修改用户头像", notes = "修改用户头像")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "token令牌", required = true, dataType = "string", paramType = "header"),
+    })
+    @ResponseBody
+    @RequestMapping(value = "img", method = RequestMethod.POST)
+    @Authorization
+    public Result updateImage(@ApiIgnore @CurrentUser User user,
+                              @RequestPart MultipartFile file) {
+        try {
+            // 校验参数非空
+            if (user == null ||
+                    file == null) {
+                return Result.ok(ResultStatus.INPUT_PARAM_ERROR);
+            }
+
+            // 调用用业务层方法修改头像
+            userBO.updateImage(user, file);
+
+            // 返回成功信息
+            return Result.ok(ResultStatus.UPDATE_SUCCESS);
+
+        } catch (Exception e) {
+            logger.error("修改头像失败：", e);
+            return Result.error(ResultStatus.UPDATE_ERROR);
+
+        }
     }
 }

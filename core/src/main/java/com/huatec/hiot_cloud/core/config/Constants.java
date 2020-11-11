@@ -70,4 +70,39 @@ public class Constants {
      * 用户类型普通用户
      */
     public static final int USER_TYPE_STAFF = 0;
+
+    /**
+     * 密码长度
+     */
+    public static final int PASSWORD_LENGTH = 6;
+
+    /**
+     * 用户文件存储目录：user
+     */
+    public static final String UPLOAD_PATH_USER = "user";
+    /**
+     * 图片加载目录(保存到数据库的相对路径(去除项目名))：
+     */
+    public static final String DOWNLOAD_PATH_IMG = "uploadfiles/images";
+    /**
+     * 图片加载目录(保存到数据库的相对路径(去除项目名))：
+     */
+    public static final String DOWNLOAD_PATH_IMG_DEFAULT = "/uploadfiles/images/default/nophoto.jpg";
+    /**
+     * 上传文件存储的根路径
+     * 在 linux 系统上，路径的连接符的值为 '/'；在Windows系统上，它为 '\\';
+     * File.separator可以根据不同的操作系统自动添加目录斜杠
+     */
+    public static final String UPLOAD_PATH = PropertyConfigurer.getProperty("file.upload.path");
+    //"D:\\huatec\\hiot_cloud\\uploadfiles";
+
+    /**
+     * 上传文件存储的路径前缀，不含uploadfiles
+     */
+    public static final String UPLOAD_PATH_PREFIX = PropertyConfigurer.getProperty("file.upload.path.prefix");
+    /**
+     * 图片存储文件夹
+     */
+    public static final String UPLOAD_PATH_IMG = "images";
+
 }
