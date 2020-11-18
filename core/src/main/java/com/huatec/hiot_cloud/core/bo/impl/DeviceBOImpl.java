@@ -25,7 +25,7 @@ import java.util.Date;
  */
 @Service
 @Transactional
-public class DeviceImpl implements IDeviceBO {
+public class DeviceBOImpl implements IDeviceBO {
 
     @Autowired
     private IDeviceService deviceDAO;
