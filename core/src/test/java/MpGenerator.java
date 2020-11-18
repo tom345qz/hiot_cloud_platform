@@ -46,7 +46,7 @@ public class MpGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"users"}); // 需要生成的表
+        strategy.setInclude(new String[]{"device"}); // 需要生成的表
 
         mpg.setStrategy(strategy);
         // 包配置

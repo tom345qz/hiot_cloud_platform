@@ -69,7 +69,7 @@ public class Constants {
     /**
      * 用户类型普通用户
      */
-    public static final int USER_TYPE_STAFF = 0;
+    public static final int USER_TYPE_STAFF = 1;
 
     /**
      * 密码长度
@@ -80,6 +80,11 @@ public class Constants {
      * 用户文件存储目录：user
      */
     public static final String UPLOAD_PATH_USER = "user";
+
+    /**
+     * 设备文件存储目录：device
+     */
+    public static final String UPLOAD_PATH_DEVICE = "device";
     /**
      * 图片加载目录(保存到数据库的相对路径(去除项目名))：
      */
