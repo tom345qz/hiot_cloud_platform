@@ -1,5 +1,8 @@
 package com.huatec.hiot_cloud.core.bo.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.huatec.hiot_cloud.core.autogenerator.entity.Device;
 import com.huatec.hiot_cloud.core.autogenerator.service.IDeviceService;
 import com.huatec.hiot_cloud.core.bo.IDeviceBO;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设备管理模块业务层实现类
@@ -153,5 +157,18 @@ public class DeviceBOImpl implements IDeviceBO {
         if (!deviceDAO.deleteById(id)) {
             throw new CustomException("删除设备失败");
         }
+    }
+
+    @Override
+    public Page<Device> listByPage(String userId, int pageIndex, int number) {
+
+        Page<Device> page = new Page<>();
+        page.setCurrent(pageIndex)
+                .setSize(number)
+                .setOrderByField("created")
+                .setAsc(false);
+        Wrapper wrapper = new EntityWrapper();
+        wrapper.eq("user_id", userId);
+        return deviceDAO.selectPage(page, wrapper);
     }
 }

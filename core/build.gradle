@@ -138,4 +138,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.zxing/javase
     compile group: 'com.google.zxing', name: 'javase', version: '3.2.1'
 
+    //module依赖
+    compile project(':mongo')
 }

@@ -110,4 +110,26 @@ public class Constants {
      */
     public static final String UPLOAD_PATH_IMG = "images";
 
+    /**
+     * 通道类型：所有
+     */
+    public static final int DATA_STREAM_TYPE_ALL = 0;
+
+    public static final int DATA_STREAM_TYPE_VALUE = 1;
+
+    public static final int DATA_STREAM_TYPE_SWITCH = 2;
+
+    public static final int DATA_STREAM_TYPE_GPS = 3;
+
+    public static final int DATA_STREAM_TYPE_TXT = 4;
+
+    /**
+     * 通道方向：所有
+     */
+    public static final int DATA_STREAM_DIRECTION_ALL = 0;
+
+    public static final int DATA_STREAM_DIRECTION_UP = 1;
+
+    public static final int DATA_STREAM_DIRECTION_DOWN = 2;
+
 }

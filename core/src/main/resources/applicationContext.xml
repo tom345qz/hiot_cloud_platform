@@ -18,6 +18,8 @@
     <!--注解注入:<context:annotation-config/>,使用<context:component-scan base-package=""默认开启注解。/>-->
     <!--Use-dafault-filters=”false”的情况下：<context:exclude-filter>指定的不扫描，<context:include-filter>指定的扫描-->
     <context:component-scan base-package="com.huatec.hiot_cloud.core"/>
+    <!--导入mongodb模块 spring配置文件-->
+    <import resource="applicationContext-mongo.xml"></import>
 
     <!--拦截器生效-->
     <mvc:interceptors>

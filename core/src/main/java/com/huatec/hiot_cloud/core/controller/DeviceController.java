@@ -1,5 +1,6 @@
 package com.huatec.hiot_cloud.core.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.huatec.hiot_cloud.core.authorization.annotation.Authorization;
 import com.huatec.hiot_cloud.core.authorization.annotation.CurrentUser;
 import com.huatec.hiot_cloud.core.authorization.annotation.Permissions;
@@ -10,10 +11,7 @@ import com.huatec.hiot_cloud.core.bo.IDeviceBO;
 import com.huatec.hiot_cloud.core.config.Result;
 import com.huatec.hiot_cloud.core.config.ResultStatus;
 import com.huatec.hiot_cloud.core.utils.CustomException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * 设备管理模块控制器层实现类
@@ -169,10 +169,10 @@ public class DeviceController {
 
         } catch (CustomException ce) {
             logger.error("查询设备信息失败：" + ce.getMsg());
-            return Result.error(ResultStatus.UPDATE_ERROR, ce.getMsg());
+            return Result.error(ResultStatus.SELECT_ERROR, ce.getMsg());
         } catch (Exception e) {
             logger.error("查询设备信息发生异常：", e);
-            return Result.error(ResultStatus.UPDATE_ERROR);
+            return Result.error(ResultStatus.SELECT_ERROR);
         }
     }
 
@@ -201,6 +201,46 @@ public class DeviceController {
             return Result.error(ResultStatus.UPDATE_ERROR, ce.getMsg());
         } catch (Exception e) {
             logger.error("删除设备发生异常：", e);
+            return Result.error(ResultStatus.UPDATE_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "分页查询设备列表", notes = "分页查询设备列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "token令牌", required = true, dataType = "string", paramType = "header"),
+    })
+    @RequestMapping(value = "list-by-page/{page}/{number}", method = RequestMethod.GET)
+    @ResponseBody
+    @Authorization
+    @Permissions(role = Role.DEVELOPER)
+    public Result listByPage(@ApiIgnore @CurrentUser User user,
+                             @ApiParam(value = "第几页") @PathVariable int page,
+                             @ApiParam(value = "每页记录数量") @PathVariable int number) {
+        try {
+            // 参数非空校验
+            if (user == null && StringUtils.isEmpty(user.getId())) {
+                return Result.error(ResultStatus.INPUT_PARAM_ERROR);
+            }
+
+            // 纠正非法分页参数
+            if (page <= 0) {
+                page = 0;
+            }
+            if (number <= 0) {
+                number = 1;
+            }
+
+            // 调用业务层查询
+            Page<Device> devicePage = deviceBO.listByPage(user.getId(), page, number);
+
+            // 返回用户信息
+            return Result.ok(ResultStatus.SELECT_SUCCESS, devicePage);
+
+        } catch (CustomException ce) {
+            logger.error("分页查询设备列表信息失败：" + ce.getMsg());
+            return Result.error(ResultStatus.UPDATE_ERROR, ce.getMsg());
+        } catch (Exception e) {
+            logger.error("分页查询设备列表信息发生异常：", e);
             return Result.error(ResultStatus.UPDATE_ERROR);
         }
     }

@@ -1,7 +1,10 @@
 package com.huatec.hiot_cloud.core.bo;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.huatec.hiot_cloud.core.autogenerator.entity.Device;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 设备管理模块业务层节课
@@ -50,4 +53,14 @@ public interface IDeviceBO {
      * @param id 设备id
      */
     void delete(String id);
+
+    /**
+     * 分页查询设备列表
+     *
+     * @param userId
+     * @param pageIndex
+     * @param number
+     * @return
+     */
+    Page<Device> listByPage(String userId, int pageIndex, int number);
 }

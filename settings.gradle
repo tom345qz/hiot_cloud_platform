@@ -1,3 +1,4 @@
 rootProject.name = 'hiot'
 include 'core'
+include 'mongo'
 
