@@ -140,4 +140,7 @@ dependencies {
 
     //module依赖
     compile project(':mongo')
+
+    // mqtt依赖
+    compile project(':mqtt')
 }
