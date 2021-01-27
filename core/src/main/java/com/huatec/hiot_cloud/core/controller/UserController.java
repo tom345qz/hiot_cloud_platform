@@ -36,6 +36,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/user")
 public class UserController {
 
+    // 用户对象
     @Autowired
     IUserBO userBO;
 
